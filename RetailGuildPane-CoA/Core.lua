@@ -12,19 +12,19 @@ end
 local function panel(parent,w,h,x,y,bg)
  local f=CreateFrame("Frame",nil,parent)
  f:SetSize(w,h);f:SetPoint("TOPLEFT",parent,"TOPLEFT",x,y)
- f:SetBackdrop({bgFile="Interface\\Buttons\\WHITE8X8",edgeFile="Interface\\Tooltips\\UI-Tooltip-Border",edgeSize=12,insets={left=3,right=3,top=3,bottom=3}})
+ f:SetBackdrop({bgFile="Interface\\Buttons\\WHITE8X8",edgeFile="Interface\\DialogFrame\\UI-DialogBox-Border",edgeSize=20,insets={left=3,right=3,top=3,bottom=3}})
  f:SetBackdropColor(unpack(bg or {0.065,0.08,0.12,0.97}))
- f:SetBackdropBorderColor(0.25,0.32,0.43,1)
+ f:SetBackdropBorderColor(0.43,0.39,0.30,1)
  return f
 end
 local function action(parent,name,w,h,fn)
  local b=CreateFrame("Button",nil,parent)
  b:SetSize(w,h)
- b:SetBackdrop({bgFile="Interface\\Buttons\\WHITE8X8",edgeFile="Interface\\Tooltips\\UI-Tooltip-Border",edgeSize=10})
- b:SetBackdropColor(0.13,0.18,0.26,0.95);b:SetBackdropBorderColor(0.27,0.36,0.47)
+ b:SetBackdrop({bgFile="Interface\\Buttons\\WHITE8X8",edgeFile="Interface\\Buttons\\UI-Panel-Button-Border",edgeSize=12})
+ b:SetBackdropColor(0.15,0.16,0.18,0.95);b:SetBackdropBorderColor(0.62,0.52,0.34)
  b.caption=label(b,"GameFontNormalSmall");b.caption:SetPoint("CENTER");b.caption:SetText(name)
- b:SetScript("OnEnter",function(self)self:SetBackdropColor(0.22,0.32,0.46,1)end)
- b:SetScript("OnLeave",function(self)self:SetBackdropColor(0.13,0.18,0.26,0.95)end)
+ b:SetScript("OnEnter",function(self)self:SetBackdropColor(0.29,0.27,0.20,1)end)
+ b:SetScript("OnLeave",function(self)self:SetBackdropColor(0.15,0.16,0.18,0.95)end)
  b:SetScript("OnClick",fn);return b
 end
 local function rosterRequest()
@@ -108,8 +108,8 @@ local function selectTab(tab)
  active=tab
  ui.chatArea:SetShown(tab=="chat")
  ui.infoArea:SetShown(tab=="info")
- ui.tabChat:SetBackdropColor(tab=="chat" and 0.22 or 0.10,tab=="chat" and 0.35 or 0.15,tab=="chat" and 0.48 or 0.22,1)
- ui.tabInfo:SetBackdropColor(tab=="info" and 0.22 or 0.10,tab=="info" and 0.35 or 0.15,tab=="info" and 0.48 or 0.22,1)
+ ui.tabChat:SetBackdropColor(tab=="chat" and 0.36 or 0.12,tab=="chat" and 0.30 or 0.12,tab=="chat" and 0.18 or 0.13,1)
+ ui.tabInfo:SetBackdropColor(tab=="info" and 0.36 or 0.12,tab=="info" and 0.30 or 0.12,tab=="info" and 0.18 or 0.13,1)
  renderInfo()
  if tab=="chat" then rosterRequest();renderRoster();renderChat()end
 end
@@ -120,30 +120,31 @@ local function build()
  w:SetMovable(true);w:EnableMouse(true);w:RegisterForDrag("LeftButton")
  w:SetScript("OnDragStart",function(self)self:StartMoving()end)
  w:SetScript("OnDragStop",function(self)self:StopMovingOrSizing()end)
- w:SetBackdrop({bgFile="Interface\\Buttons\\WHITE8X8",edgeFile="Interface\\DialogFrame\\UI-DialogBox-Border",edgeSize=22,insets={left=8,right=8,top=8,bottom=8}})
- w:SetBackdropColor(0.045,0.065,0.10,0.98)
- local header=panel(w,945,50,17,-16,{0.08,0.12,0.18,1})
- local title=label(header,"GameFontNormalLarge");title:SetPoint("LEFT",header,"LEFT",18,0);title:SetText("|cffd7bd81GUILD & COMMUNITIES|r")
+ w:SetBackdrop({bgFile="Interface\\FrameGeneral\\UI-Background-Rock",edgeFile="Interface\\DialogFrame\\UI-DialogBox-Border",edgeSize=22,insets={left=8,right=8,top=8,bottom=8}})
+ w:SetBackdropColor(0.075,0.075,0.078,0.99)
+ local header=panel(w,945,50,17,-16,{0.14,0.13,0.115,1})
+ local title=label(header,"GameFontNormalLarge");title:SetPoint("LEFT",header,"LEFT",18,0);title:SetText("|cffffd78aGUILD & COMMUNITIES|r")
  local close=action(header,"X",30,28,function()w:Hide()end);close:SetPoint("RIGHT",header,"RIGHT",-10,0)
- local side=panel(w,224,528,17,-75,{0.07,0.105,0.16,1})
+ local side=panel(w,224,528,17,-75,{0.105,0.095,0.085,1})
  local guildName=label(side,"GameFontNormalLarge");guildName:SetPoint("TOPLEFT",side,"TOPLEFT",16,-22);guildName:SetWidth(195)
  ui.guildTitle=guildName
+ local guildEmblem=side:CreateTexture(nil,"BACKGROUND");guildEmblem:SetTexture("Interface\\GuildFrame\\GuildFrame-Banner");guildEmblem:SetSize(196,210);guildEmblem:SetPoint("TOP",side,"TOP",0,-70);guildEmblem:SetAlpha(0.40)
  local subtitle=label(side,"GameFontNormalSmall");subtitle:SetPoint("TOPLEFT",side,"TOPLEFT",16,-58);subtitle:SetText("|cff98a9beYOUR GUILD|r")
  local ornament=side:CreateTexture(nil,"ARTWORK");ornament:SetTexture("Interface\\GuildFrame\\GuildLogo")
- ornament:SetSize(120,120);ornament:SetPoint("TOP",side,"TOP",0,-100)
+ ornament:SetSize(96,96);ornament:SetPoint("TOP",side,"TOP",0,-115)
  local motdTitle=label(side,"GameFontNormal");motdTitle:SetPoint("TOPLEFT",side,"TOPLEFT",15,-270);motdTitle:SetText("MESSAGE OF THE DAY")
  local motd=label(side,"GameFontHighlightSmall");motd:SetPoint("TOPLEFT",side,"TOPLEFT",15,-297);motd:SetWidth(193);motd:SetHeight(105);motd:SetJustifyV("TOP");ui.motd=motd
  local original=action(side,"Original Guild Window",188,30,function()
   w:Hide();if ToggleFriendsFrame then ToggleFriendsFrame(3)elseif FriendsFrame then ShowUIPanel(FriendsFrame)end
  end);original:SetPoint("BOTTOM",side,"BOTTOM",0,20)
- local right=panel(w,711,528,251,-75,{0.06,0.09,0.135,1})
+ local right=panel(w,711,528,251,-75,{0.095,0.09,0.085,1})
  ui.tabChat=action(right,"CHAT & ROSTER",160,35,function()selectTab("chat")end)
  ui.tabChat:SetPoint("TOPLEFT",right,"TOPLEFT",15,-13)
  ui.tabInfo=action(right,"GUILD INFO",160,35,function()selectTab("info")end)
  ui.tabInfo:SetPoint("LEFT",ui.tabChat,"RIGHT",8,0)
  ui.chatArea=CreateFrame("Frame",nil,right);ui.chatArea:SetAllPoints(right)
  ui.infoArea=CreateFrame("Frame",nil,right);ui.infoArea:SetAllPoints(right)
- local chatBox=panel(ui.chatArea,430,417,14,-63,{0.045,0.065,0.095,1})
+ local chatBox=panel(ui.chatArea,430,417,14,-63,{0.055,0.055,0.055,1})
  local chatHeader=label(chatBox,"GameFontNormal");chatHeader:SetPoint("TOPLEFT",chatBox,"TOPLEFT",13,-12);chatHeader:SetText("Guild Chat")
  ui.chatRows={}
  for i=1,14 do
@@ -206,6 +207,7 @@ A:RegisterEvent("ADDON_LOADED")
 A:RegisterEvent("PLAYER_ENTERING_WORLD")
 A:RegisterEvent("GUILD_ROSTER_UPDATE")
 A:RegisterEvent("GUILD_MOTD")
+A:RegisterEvent("PLAYER_GUILD_UPDATE")
 A:RegisterEvent("CHAT_MSG_GUILD")
 A:RegisterEvent("CHAT_MSG_GUILD_ACHIEVEMENT")
 A:SetScript("OnEvent",function(self,event,...)
@@ -217,7 +219,7 @@ A:SetScript("OnEvent",function(self,event,...)
  elseif event=="PLAYER_ENTERING_WORLD"then rosterRequest()
  elseif event=="GUILD_ROSTER_UPDATE"then
   if ui and ui.window:IsShown()then renderRoster();renderInfo()end
- elseif event=="GUILD_MOTD"then if ui then renderInfo()end
+ elseif event=="GUILD_MOTD" or event=="PLAYER_GUILD_UPDATE" then if ui then renderInfo();renderRoster()end
  elseif (event=="CHAT_MSG_GUILD"or event=="CHAT_MSG_GUILD_ACHIEVEMENT")and db then
   local message,sender=...
   local stamp=date and date("%m/%d %H:%M") or ""
