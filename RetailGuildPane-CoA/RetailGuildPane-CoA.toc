@@ -1,0 +1,7 @@
+## Interface: 30300
+## Title: RetailGuildPane-CoA
+## Notes: Retail-inspired guild pane for Conquest Reborn
+## Author: Uncle Bone
+## Version: 1.0.0
+## SavedVariables: RetailGuildPaneDB
+Core.lua
