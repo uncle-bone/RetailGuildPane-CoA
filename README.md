@@ -4,23 +4,23 @@
 
 RetailGuildPane-CoA aims to bring the cleaner layout and easier guild navigation of modern World of Warcraft to Conquest Reborn's **WoW 3.3.5a-based client**. It is a standalone addon: no Retail client files or server modifications are required.
 
-> **Development status:** v1.0.0 experimental preview. The source is available, but in-game functionality and compatibility have **not yet been verified**. This is not a stable release.
+> **Development status:** v1.2.0 visual preview. The source is available, but in-game functionality and compatibility have **not yet been verified**. This is not a stable release.
 
-## Current v1.0.0 features
+## Current v1.2.0 features
 
-- Custom, movable guild window with a modern-inspired layout.
+- Movable guild window with Blizzard-style stone background, metal borders, brass accents, guild banner and a Retail-inspired two-panel layout.
 - Guild roster with player names, levels, ranks, zones, and online indicators.
 - Search by member name and toggle visibility of offline members.
 - Guild information and message-of-the-day display.
 - Guild chat view with messages captured while the addon is running, plus a message input.
-- Manual roster refresh.
+- Roster refresh on guild events and on opening the chat/roster tab.
 - Shortcut to the original Blizzard guild interface.
 - Saved preferences for roster search and offline filtering.
 - Uses legacy guild APIs rather than depending on Retail Communities APIs.
 
 ## Planned improvements
 
-- Closer Retail Guild & Communities visual design, including refined tabs, textures, and member details.
+- Further visual matching to Retail Guild & Communities screenshots; current artwork is a preliminary adaptation, not a pixel-perfect port.
 - Sorting and scrolling for large guild rosters.
 - Rank and permission-aware guild management.
 - Better chat formatting, history behavior, and context menus.
@@ -53,3 +53,7 @@ Found a bug or have a feature suggestion? Open a [GitHub issue](https://github.c
 **Repository:** https://github.com/uncle-bone/RetailGuildPane-CoA
 
 This project is an independent fan-made addon and is not affiliated with Blizzard Entertainment or Project Ascension. World of Warcraft names and assets belong to their respective owners.
+
+## Visual references
+
+The frame styling is informed by [DragonflightUI Classic](https://github.com/Karl-HeinzSchneider/WoW-DragonflightUI) and the Retail Guild & Communities design. This addon currently references Blizzard client UI textures; it does not redistribute DragonflightUI source or assets. DragonflightUI is a separate project; credit belongs to its respective authors. This build has not been tested in-game.
