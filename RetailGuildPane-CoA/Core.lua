@@ -1,6 +1,7 @@
 -- RetailGuildPane-CoA: 3.3.5a / Conquest Reborn
 local A=CreateFrame("Frame")
 local db,ui,active="chat"
+local updatingScroll=false
 local members,visible={},{}
 local lastRoster=0
 local function label(parent,size,color)
@@ -45,7 +46,10 @@ local function scan()
 end
 local function setScroll(scroll,total,shown)
  local max=math.max(0,total-shown)
- scroll:SetMinMaxValues(0,max);scroll:SetValue(math.min(scroll:GetValue(),max))
+ scroll:SetMinMaxValues(0,max)
+ if scroll:GetValue()>max then
+  updatingScroll=true;scroll:SetValue(max);updatingScroll=false
+ end
 end
 local renderRoster,renderChat,renderInfo
 renderRoster=function()
@@ -106,7 +110,8 @@ local function selectTab(tab)
  ui.infoArea:SetShown(tab=="info")
  ui.tabChat:SetBackdropColor(tab=="chat" and 0.22 or 0.10,tab=="chat" and 0.35 or 0.15,tab=="chat" and 0.48 or 0.22,1)
  ui.tabInfo:SetBackdropColor(tab=="info" and 0.22 or 0.10,tab=="info" and 0.35 or 0.15,tab=="info" and 0.48 or 0.22,1)
- if tab=="chat" then rosterRequest();renderRoster();renderChat()else renderInfo()end
+ renderInfo()
+ if tab=="chat" then rosterRequest();renderRoster();renderChat()end
 end
 local function build()
  ui={}
@@ -149,7 +154,7 @@ local function build()
  local scroll=CreateFrame("Slider",nil,chatBox,"OptionsSliderTemplate")
  scroll:SetOrientation("VERTICAL");scroll:SetSize(14,325);scroll:SetPoint("RIGHT",chatBox,"RIGHT",-8,-5)
  scroll:SetMinMaxValues(0,0);scroll:SetValueStep(1);scroll:SetValue(0)
- scroll:SetScript("OnValueChanged",function()renderChat()end);ui.chatScroll=scroll
+ scroll:SetScript("OnValueChanged",function()if not updatingScroll then renderChat()end end);ui.chatScroll=scroll
  local input=CreateFrame("EditBox",nil,ui.chatArea,"InputBoxTemplate")
  input:SetSize(395,28);input:SetPoint("BOTTOMLEFT",ui.chatArea,"BOTTOMLEFT",28,15)
  input:SetAutoFocus(false);input:SetMaxLetters(255)
@@ -178,7 +183,7 @@ local function build()
  local rscroll=CreateFrame("Slider",nil,rosterBox,"OptionsSliderTemplate")
  rscroll:SetOrientation("VERTICAL");rscroll:SetSize(13,305);rscroll:SetPoint("RIGHT",rosterBox,"RIGHT",-9,-47)
  rscroll:SetMinMaxValues(0,0);rscroll:SetValueStep(1);rscroll:SetValue(0)
- rscroll:SetScript("OnValueChanged",function()renderRoster()end);ui.rosterScroll=rscroll
+ rscroll:SetScript("OnValueChanged",function()if not updatingScroll then renderRoster()end end);ui.rosterScroll=rscroll
  local infoTitle=label(ui.infoArea,"GameFontNormalLarge");infoTitle:SetPoint("TOPLEFT",ui.infoArea,"TOPLEFT",25,-75);infoTitle:SetText("Guild Information")
  local desc=label(ui.infoArea,"GameFontHighlight");desc:SetPoint("TOPLEFT",ui.infoArea,"TOPLEFT",25,-115);desc:SetWidth(645);desc:SetHeight(250);desc:SetJustifyV("TOP");ui.description=desc
  local infoHelp=label(ui.infoArea,"GameFontHighlightSmall")
